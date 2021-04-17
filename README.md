@@ -1,6 +1,6 @@
 # Fonts
 
-Fonts is a package that provides helpers to access font details and easily retrive font bytes.
+Fonts is a package that provides helpers to access font details and easily retrieve font bytes.
 
 This package has **ZERO** 3rd-party dependencies.
 
@@ -10,7 +10,7 @@ For now, Google Fonts is supported, but other fonts are planned.
 
 When working with images, PDFs or any other format that requires us to embed fonts, we can decide to download the fonts and embed them directly into our application.
 
-However, if our application could use multiple different fonts, then:
+However, if our application could use multiple different fonts which are decided at runtime, then there are a couple complications:
 
 1. There is no easy way to know what fonts are available and what variants they have. Google Fonts provides an API, but you can only receive a dump all **FONT** details.
 2. It becomes tedious to download the font bytes during runtime, and manage caching.
