@@ -6,6 +6,17 @@ This package has **ZERO** 3rd-party dependencies.
 
 For now, Google Fonts is supported, but other fonts are planned.
 
+## Motivation
+
+When working with images, PDFs or any other format that requires us to embed fonts, we can decide to download the fonts and embed them directly into our application.
+
+However, if our application could use multiple different fonts, then:
+
+1. There is no easy way to know what fonts are available and what variants they have. Google Fonts provides an API, but you can only receive a dump all **FONT** details.
+2. It becomes tedious to download the font bytes during runtime, and manage caching.
+
+This package helps to simplify this process
+
 ## Reference
 
 See <https://pkg.go.dev/github.com/go-swiss/fonts>
