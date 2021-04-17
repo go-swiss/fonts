@@ -12,6 +12,8 @@ See <https://pkg.go.dev/github.com/go-swiss/fonts>
 
 ## How to use
 
+### Get Font Details
+
 To get the details of a Google Font, use the `GetFontDetails` function:
 
 ```go
@@ -40,6 +42,8 @@ Family: Roboto
 Variants: [100 100italic 300 300italic regular italic 500 500italic 700 700italic 900 900italic]
 ```
 
+### Get Font Bytes
+
 To get the `bytes` of a font, use the `GetFontBytes` method. This will download the font bytes from the appropriate URL.
 
 ```go
@@ -63,7 +67,11 @@ if err != nil {
 // Do something with the font
 ```
 
+### Caching Responses
+
 In our application it is possible that we need to frequetnly get fonts. To reduce duplicate requests, a `fonts.Cache` implementation can be passed as the 4th parameter to the `GetFontBytes` function.
+
+Here is an example using <https://github.com/ReneKroon/ttlcache>
 
 
 ```go
@@ -72,7 +80,7 @@ package main
 import (
     "time"
 
-	"github.com/ReneKroon/ttlcache/v2"
+    "github.com/ReneKroon/ttlcache/v2"
 )
 
 type cache struct {
@@ -111,3 +119,9 @@ func main() {
     // Do something with the font
 }
 ```
+
+## Contributing
+
+Feature requests and Pull Requests are welcome!
+
+If working locally, the `google/all` directory can be refreshed by running `go generate`. See `generate/main.go` for details.
