@@ -9,7 +9,7 @@ var (
 	ErrMissingVariant error = errors.New("Missing variant")
 )
 
-// Cache can be passed to certain functions to prevent duplicate requests if reusing fonts
+// Cache can be passed to certain functions to prevent duplicate requests when reusing fonts
 type Cache interface {
 	Get(string) (value []byte, hit bool)
 	Set(key string, value []byte)

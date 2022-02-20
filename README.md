@@ -1,6 +1,6 @@
 # Fonts
 
-Fonts is a package that provides helpers to access font details and easily retrieve font bytes.
+Fonts is a package that provides helpers to access font details, easily retrieve font bytes and proxy font requests.
 
 This package has **ZERO** 3rd-party dependencies.
 
@@ -12,7 +12,7 @@ When working with images, PDFs or any other format that requires us to embed fon
 
 However, if our application could use multiple different fonts which are decided at runtime, then there are a couple complications:
 
-1. There is no easy way to know what fonts are available and what variants they have. Google Fonts provides an API, but you can only receive a dump all **FONT** details.
+1. There is no easy way to know what fonts are available and what variants they have. Google Fonts provides an API, but you can only receive a dump of all **FONT** details.
 2. It becomes tedious to download the font bytes during runtime, and manage caching.
 
 This package helps to simplify this process
@@ -22,6 +22,16 @@ This package helps to simplify this process
 See <https://pkg.go.dev/github.com/go-swiss/fonts>
 
 ## How to use
+
+### Proxy Google Font Requests
+
+The `Proxy()` function returns a `http.Handler` that will proxy all requests to the Google Fonts server.  
+It takes a path, which is used when generating the urls of the font bytes
+For example, if you want to proxy requests on `example.com/fonts`:
+
+```go
+http.Handle("/fonts", http.StripPrefix("/fonts", google.Proxy("/fonts")))
+```
 
 ### Get Font Details
 

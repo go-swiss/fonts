@@ -1,6 +1,6 @@
 package fonts
 
-// Font details
+// Font holds all the necessary information about a font
 type Font struct {
 	// Category: The category of the font.
 	Category string `json:"category,omitempty"`
