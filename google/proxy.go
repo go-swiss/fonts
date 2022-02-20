@@ -35,7 +35,11 @@ func Proxy(path string) http.Handler {
 
 		req.URL.Scheme = target.Scheme
 		req.URL.Host = target.Host
-		req.Host = target.Host
+		req.Host = target.Host // We get a 404 without this
+
+		// prevent this header from being set to prevent sending the IP addresses of the client
+		req.Header["X-Forwarded-For"] = nil
+		req.RemoteAddr = "" // Remove the client IP address just to be sure
 
 		if _, ok := req.Header["User-Agent"]; !ok {
 			// explicitly disable User-Agent so it's not set to default value
@@ -43,7 +47,10 @@ func Proxy(path string) http.Handler {
 		}
 	}
 
-	return &httputil.ReverseProxy{Director: director, ModifyResponse: responseModifier(path)}
+	return &httputil.ReverseProxy{
+		Director:       director,
+		ModifyResponse: responseModifier(path),
+	}
 }
 
 func responseModifier(path string) func(resp *http.Response) error {
