@@ -3,11 +3,10 @@ package google
 import (
 	"bytes"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
-	"path/filepath"
+	"path"
 	"strings"
 )
 
@@ -15,7 +14,7 @@ import (
 // it take a path, which is used when generating the urls of the font bytes
 // For example, if you want to proxy requests on `example.com/fonts`:
 //
-//     http.Handle("/fonts", http.StripPrefix("/fonts", google.Proxy("/fonts")))
+//	http.Handle("/fonts", http.StripPrefix("/fonts", google.Proxy("/fonts")))
 func Proxy(path string) http.Handler {
 	apiURL, _ := url.Parse("https://fonts.googleapis.com")
 	staticURL, _ := url.Parse("https://fonts.gstatic.com")
@@ -53,16 +52,16 @@ func Proxy(path string) http.Handler {
 	}
 }
 
-func responseModifier(path string) func(resp *http.Response) error {
+func responseModifier(fontPath string) func(resp *http.Response) error {
 	return func(resp *http.Response) error {
-		oldBody, err := ioutil.ReadAll(resp.Body)
+		oldBody, err := io.ReadAll(resp.Body)
 		if err != nil {
 			return err
 		}
 
 		replaced := bytes.ReplaceAll(oldBody,
 			[]byte("https://fonts.gstatic.com"),
-			[]byte(filepath.ToSlash(filepath.Join(path, "static"))),
+			[]byte(path.Join(fontPath, "static")),
 		)
 
 		resp.Body = io.NopCloser(bytes.NewBuffer(replaced))

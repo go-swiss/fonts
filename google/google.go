@@ -9,7 +9,7 @@ import (
 	"io"
 	"io/fs"
 	"net/http"
-	"path/filepath"
+	"path"
 	"strings"
 
 	"github.com/go-swiss/fonts"
@@ -25,7 +25,7 @@ func GetFontDetails(ctx context.Context, family string) (*fonts.Font, error) {
 	family = strings.ReplaceAll(family, " ", "")
 	normalizedFamilyName := strings.ToLower(family)
 
-	jsonFile, err := all.ReadFile(filepath.Join("all", normalizedFamilyName+".json"))
+	jsonFile, err := all.ReadFile(path.Join("all", normalizedFamilyName+".json"))
 	if err != nil {
 		if errors.Is(err, fs.ErrNotExist) {
 			return nil, fonts.ErrUnknownFont
@@ -33,7 +33,7 @@ func GetFontDetails(ctx context.Context, family string) (*fonts.Font, error) {
 		return nil, err
 	}
 
-	var font = new(fonts.Font)
+	font := new(fonts.Font)
 	err = json.NewDecoder(bytes.NewBuffer(jsonFile)).Decode(font)
 	if err != nil {
 		return nil, err
@@ -52,7 +52,7 @@ func GetFontBytes(ctx context.Context, family string, variant string, cache font
 	family = strings.ReplaceAll(family, " ", "")
 	normalizedFamilyName := strings.ToLower(family)
 
-	jsonFile, err := all.ReadFile(filepath.Join("all", normalizedFamilyName+".json"))
+	jsonFile, err := all.ReadFile(path.Join("all", normalizedFamilyName+".json"))
 	if err != nil {
 		if errors.Is(err, fs.ErrNotExist) {
 			return nil, fonts.ErrUnknownFont
@@ -60,7 +60,7 @@ func GetFontBytes(ctx context.Context, family string, variant string, cache font
 		return nil, err
 	}
 
-	var webFont = new(fonts.Font)
+	webFont := new(fonts.Font)
 	err = json.NewDecoder(bytes.NewBuffer(jsonFile)).Decode(webFont)
 	if err != nil {
 		return nil, err
